@@ -15,13 +15,13 @@ CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
 CND_PACKAGE_NAME_Debug=libVision.so.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/libVision.so.tar
 # Release configuration
-CND_PLATFORM_Release=MinGW-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/MinGW-Windows
+CND_PLATFORM_Release=None-Windows
+CND_ARTIFACT_DIR_Release=dist/Release/None-Windows
 CND_ARTIFACT_NAME_Release=libVision.dll
-CND_ARTIFACT_PATH_Release=dist/Release/MinGW-Windows/libVision.dll
-CND_PACKAGE_DIR_Release=dist/Release/MinGW-Windows/package
+CND_ARTIFACT_PATH_Release=dist/Release/None-Windows/libVision.dll
+CND_PACKAGE_DIR_Release=dist/Release/None-Windows/package
 CND_PACKAGE_NAME_Release=libVision.dll.tar
-CND_PACKAGE_PATH_Release=dist/Release/MinGW-Windows/package/libVision.dll.tar
+CND_PACKAGE_PATH_Release=dist/Release/None-Windows/package/libVision.dll.tar
 #
 # include compiler specific variables
 #
