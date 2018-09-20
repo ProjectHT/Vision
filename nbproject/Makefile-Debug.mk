@@ -52,7 +52,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=`pkg-config --libs libavcodec-ffmpeg` `pkg-config --libs libavformat-ffmpeg` `pkg-config --libs libavutil-ffmpeg` `pkg-config --libs libswresample-ffmpeg` `pkg-config --libs libswscale-ffmpeg` `pkg-config --libs opencv` -lpthread  ../lib/libLog.so  
+LDLIBSOPTIONS=`pkg-config --libs libavcodec-ffmpeg` `pkg-config --libs libavformat-ffmpeg` `pkg-config --libs libavutil-ffmpeg` `pkg-config --libs libswresample-ffmpeg` `pkg-config --libs libswscale-ffmpeg` `pkg-config --libs opencv` -lpthread  ../lib/libLog.so ../lib/libLog.so  
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

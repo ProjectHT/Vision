@@ -53,6 +53,7 @@
             <linkerOptionItem>`pkg-config --libs opencv`</linkerOptionItem>
             <linkerLibStdlibItem>PosixThreads</linkerLibStdlibItem>
             <linkerOptionItem>../lib/libLog.so</linkerOptionItem>
+            <linkerOptionItem>../lib/libLog.so</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
