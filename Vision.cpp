@@ -677,7 +677,7 @@ bool Vision::run() {
     CascadeClassifier cascade;
     
     hog_detect_person.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());
-    cascade.load("C:\\msys64\\mingw64\\share\\OpenCV\\haarcascades\\haarcascade_frontalface_default.xml");
+    cascade.load("/root/haarcascade_frontalface_default.xml");
     long tmp_index = 0;
     while(this->p_interface->getState()) {
         timeval begin_tp, end_tp;
@@ -694,13 +694,13 @@ bool Vision::run() {
                 tmp_index  = 0;
             }
             if(this->p_interface->getStateDetectFace()) {
-
+                detectFace(cascade, src, 1.0);
             }
         }
         gettimeofday(&end_tp, 0);
         long time = end_tp.tv_usec - begin_tp.tv_usec + 1000000*(end_tp.tv_sec - begin_tp.tv_sec);
-        if(time < 1000000) {
-            usleep(100000 - time);
+        if(time < 5000000) {
+            usleep(5000000 - time);
         }
     }
 #ifdef M_DEBUG
@@ -710,12 +710,49 @@ bool Vision::run() {
     return true;
 }
 /*************************************************************************************************/
+bool Vision::detectFace(CascadeClassifier &detector, Mat &src, double scale) {
+    vector<Rect> faces;
+    Mat gray, smallImg, display;
+    display = src.clone();
+    cvtColor( src, gray, COLOR_BGR2GRAY );
+    double fx = 1.0 / scale; 
+    resize( gray, smallImg, Size(), fx, fx, INTER_LINEAR );
+    equalizeHist( smallImg, smallImg );
+    detector.detectMultiScale( smallImg, faces, 1.2,  2, 0|CASCADE_SCALE_IMAGE, Size(20, 20) );
+    if( faces.size() <= 0 ) {
+        return false;
+    } 
+    for ( size_t i = 0; i < faces.size(); i++ ) {
+        Rect r = faces[i]; 
+        Point center; 
+        Scalar color = Scalar(255, 0, 0);
+        
+        int radius; 
+  
+        double aspect_ratio = (double)r.width/r.height; 
+        if( 0.75 < aspect_ratio && aspect_ratio < 1.3 ) 
+        { 
+            center.x = cvRound((r.x + r.width*0.5)*scale); 
+            center.y = cvRound((r.y + r.height*0.5)*scale); 
+            radius = cvRound((r.width + r.height)*0.25*scale); 
+            circle( display, center, radius, color, 3, 8, 0 ); 
+        } 
+        else {
+            rectangle( display, cvPoint(cvRound(r.x*scale), cvRound(r.y*scale)), 
+                    cvPoint(cvRound((r.x + r.width-1)*scale),  
+                    cvRound((r.y + r.height-1)*scale)), color, 3, 8, 0); 
+        }
+    }
+    cout << writePhoto(display) << endl;
+    return true;
+}
+/*************************************************************************************************/
 string Vision::writePhoto(Mat& src) {
     vector<int> compression_params;
     compression_params.push_back( cv::IMWRITE_JPEG_QUALITY );
     compression_params.push_back( 100 );
     string name_data = "image-" + getDayTime() + ".jpg";
-    string path = path + name_data;
+    string path = "/root/Pictures/" + name_data;
     imwrite(path.c_str(), src, compression_params); 
 #ifdef M_DEBUG
     string t_str = "Vision->Vision[" + this->p_interface->getName()+ "]";
